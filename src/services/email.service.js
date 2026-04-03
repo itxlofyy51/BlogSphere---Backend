@@ -2,15 +2,18 @@ const nodemailer = require("nodemailer");
 const config = require("../config/config");
 
 const transporter = nodemailer.createTransport({
-    service:"gmail",
-    auth:{
-        type:"OAUTH2",
-        user:config.GOOGLE_USER,
-        clientId:config.GOOGLE_CLIENT_ID  ,
-        clientSecret:config.GOOGLE_CLIENT_SECRET,
-        refreshToken:config.GOOGLE_REFRESH_TOKEN
-    }
-})
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false, 
+  auth: {
+    user: config.EMAIL_USER,
+    pass: config.EMAIL_PASS,
+  },
+  tls: {
+    rejectUnauthorized: false // This helps bypass cloud network restrictions
+  }
+});
 transporter.verify((error,success)=>{ 
     if(error){
         console.log("Error setting up email transporter",error);
