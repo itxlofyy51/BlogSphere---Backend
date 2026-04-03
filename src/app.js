@@ -7,7 +7,7 @@ const cors = require("cors");
 const blogRouter = require("./routers/blog.routes");
 
 app.use(cors({
-    origin:"*",
+    origin:"https://blog-sphere-modern-mern-stack-publi.vercel.app",
     credentials:true
 }))
 app.use((req, res, next) => {
