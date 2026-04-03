@@ -15,7 +15,7 @@ if(!process.env.GOOGLE_CLIENT_SECRET){
 if(!process.env.GOOGLE_REFRESH_TOKEN){
     throw new Error("GOOGLE_REFRESH_TOKEN  is not defined in environmental variables")
 }
-if(!process.env.GOOGLE_USER){
+if(!process.env.EMAIL_USER){
     throw new Error("GOOGLE_USER  is not defined in environmental variables")
 }
 if(!process.env.CLOUDINARY_CLOUD_NAME){
