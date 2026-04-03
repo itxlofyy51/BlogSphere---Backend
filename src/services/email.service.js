@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
   secure: false, // Must be false for 587
   auth: {
     user: config.EMAIL_USER,
-    pass: config.env.EMAIL_PASS,
+    pass: config.EMAIL_PASS,
   },
   dnsLookup: (hostname, options, callback) => {
     // This forces the server to ignore IPv6 and use IPv4
