@@ -1,23 +1,26 @@
 const nodemailer = require("nodemailer");
 const config = require("../config/config");
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+const transporter = const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
   port: 587,
-  secure: false, 
+  secure: false, // Must be false for 587
   auth: {
-    user: config.EMAIL_USER,
-    pass: config.EMAIL_PASS,
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
-  connectionTimeout: 10000, // 10 seconds
-  greetingTimeout: 10000,
-  socketTimeout: 10000,
   dnsLookup: (hostname, options, callback) => {
-    require('dns').lookup(hostname, { family: 4 }, callback); // Forces IPv4
+    // This forces the server to ignore IPv6 and use IPv4
+    require('dns').lookup(hostname, { family: 4 }, callback);
   },
   tls: {
-    rejectUnauthorized: false 
-  }});
+    // Helps bypass cloud network security restrictions
+    rejectUnauthorized: false,
+    minVersion: 'TLSv1.2'
+  },
+  connectionTimeout: 20000, 
+});
+  
 transporter.verify((error,success)=>{ 
     if(error){
         console.log("Error setting up email transporter",error);
