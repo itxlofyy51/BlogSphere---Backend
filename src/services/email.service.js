@@ -1,24 +1,21 @@
 const nodemailer = require("nodemailer");
 const config = require("../config/config");
-
+const dns = require("dns");
+dns.setDefaultResultOrder("ipv4first");
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
-  secure: false, // Must be false for 587
+  secure: false,
   auth: {
     user: config.EMAIL_USER,
     pass: config.EMAIL_PASS,
   },
-  dnsLookup: (hostname, options, callback) => {
-    // This forces the server to ignore IPv6 and use IPv4
-    require('dns').lookup(hostname, { family: 4 }, callback);
-  },
   tls: {
-    // Helps bypass cloud network security restrictions
     rejectUnauthorized: false,
     minVersion: 'TLSv1.2'
   },
-  connectionTimeout: 20000, 
+  connectionTimeout: 20000,
+  socketOptions: { family: 4 }, // ✅ force IPv4 at socket level
 });
   
 transporter.verify((error,success)=>{ 
